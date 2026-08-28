@@ -48,10 +48,3 @@ Won't Have (v1):
 
 * The target machine possesses baseline operating system libraries and standard development runtimes that can be procedurally mapped.
 * Extreme compression and extraction processes are allowed higher CPU time and memory usage trade-offs in exchange for minimal file footprint sizes.
-
-If you want to proceed, tell me:
-
-* Should we write the Technical Requirements Document (TRD) next to detail the architecture for the cross-file deduplication engine?
-* Do you want to adjust any of the core size reduction targets for Project Hungry?
-
-
