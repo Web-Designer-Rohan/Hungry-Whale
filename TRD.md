@@ -1,70 +1,83 @@
-## Technical Requirements Document (TRD): Project Hungry## 1. System Architecture Overview
-Project Hungry uses a 3-Tier Asymmetric Pipeline Architecture. It separates data processing into ingestion, semantic reduction, and deterministic reconstruction.
+# Technical Requirements Document (TRD) — Hungry-Whale
 
-[ Raw 30 GB Workspace ] 
-         │
-         ▼
-[ Tier 1: Manifest & Purge Engine ] ──► Strips transient caches / generates rebuild specs
-         │
-         ▼
-[ Tier 2: Cross-File Pattern Matrix ] ──► Cross-references syntax and builds single-instance dictionaries
-         │
-         ▼
-[ Tier 3: Binary-to-Math Vectorizer ] ──► Transforms high-entropy AI weights & media into algebraic seeds
-         │
-         ▼
-[ .hng Compressed Master Package (~3 MB) ]
+## 1. How the system works
 
-------------------------------
-## 2. Component Specifications## 2.1 Tier 1: The Manifest & Purge Engine
+Hungry-Whale uses a 3-step pipeline:
 
-* Responsibility: Scans the target directory, isolates root source files, and obliterates rebuildable transient caches (node_modules, .venv, __pycache__).
-* Implementation: Python 3.12 core orchestration script.
-* Output: Generates a lightweight JSON configuration manifest (hungry.manifest) containing package versions, dependency trees, and database schema outlines (schema.sql).
+```
+[ Raw 30 GB Workspace ]
+        │
+        ▼
+[ Step 1: Manifest & Purge Engine ]  → removes caches, writes rebuild instructions
+        │
+        ▼
+[ Step 2: Cross-File Pattern Matrix ]  → finds repeated text, keeps one copy
+        │
+        ▼
+[ Step 3: Binary-to-Math Vectorizer ]  → turns AI weights and media into math seeds
+        │
+        ▼
+[ .hng Compressed Package (~3 MB) ]
+```
 
-## 2.2 Tier 2: The Cross-File Pattern Matrix
+## 2. Parts of the system
 
-* Responsibility: Eliminates file-boundary isolation. It indexes all plain text and structured source files (HTML, CSS, TypeScript, Rust, SQL dumps) into a global memory space.
-* Implementation: Custom sliding-window dictionary builder using a modified LZMA2/Zstandard hybrid approach.
-* Output: A unified master token dictionary where duplicate text segments across different folders point to a single physical memory address.
+### 2.1 Step 1: Manifest & Purge Engine
+- **Job:** scan the folder, keep real source files, remove rebuildable caches
+  (`node_modules`, `.venv`, `__pycache__`).
+- **Made with:** Python 3.12.
+- **Output:** a small JSON file (`hungry.manifest`) with package versions,
+  dependency trees, and database schema outlines (`schema.sql`).
 
-## 2.3 Tier 3: The Binary-to-Math Vectorizer
+### 2.2 Step 2: Cross-File Pattern Matrix
+- **Job:** read all text files (HTML, CSS, TypeScript, Rust, SQL) as one big
+  pool. Text that repeats in many files is stored once; the rest point to it.
+- **Made with:** a custom sliding-window dictionary that mixes LZMA2 and
+  Zstandard.
+- **Output:** one master dictionary. Duplicate text points to a single shared
+  entry.
 
-* Responsibility: Handles uncompressible media (.mp4, .mp3, .png) and AI model files (.gguf).
-* Implementation: Uses localized matrix factorization and Fourier transform algorithms to approximate binary blocks as mathematical wave equations.
-* Output: Compact coordinate seeds and algebraic coefficients rather than raw static pixels or weight arrays.
+### 2.3 Step 3: Binary-to-Math Vectorizer
+- **Job:** handle media (`.mp4`, `.mp3`, `.png`) and AI files (`.gguf`) that do
+  not compress well as bytes.
+- **Made with:** matrix factorization and Fourier transforms — blocks become
+  math wave equations.
+- **Output:** small math seeds and coefficients, not raw bytes.
 
-## 2.4 The Extraction and Rebuilder Engine
+### 2.4 The Extraction & Rebuilder Engine
+- **Job:** rebuild the 30 GB workspace on an offline machine.
+- **Made with:** Rust — fast, safe, and cross-platform.
+- **Flow:** read the `.hng` header → expand the dictionary → run CPU math to
+  redraw media and AI → run install scripts using OS libraries already on the
+  machine.
+- **Runs on:** Windows and Linux (one codebase, two builds).
 
-* Responsibility: Reconstructs the 30 GB environment on an air-gapped target machine without network access.
-* Implementation: Native executable binary written in Rust for lightning-fast memory allocation and file-system writing.
-* Execution Flow: Parses the .hng header, expands the unified dictionary, runs local CPU wave calculations to render media/AI seeds, and executes local manifest installation scripts using pre-cached OS libraries.
+## 3. The .hng file format
 
-------------------------------
-## 3. Data Schema: The .hng File Format Specification
-The proprietary archive format (.hng) is structured into four distinct sequential byte blocks:
+One file, four blocks:
 
-| Byte Offset | Block Name | Description |
+| Bytes | Block | What it holds |
 |---|---|---|
-| 0x00 - 0x3F | Magic Header & Checksum | 64-byte signature HUNGRY_V1 followed by root SHA-256 validation hash. |
-| 0x40 - 0xFF | Manifest Ledger | Compressed JSON block defining environmental layout, dependency versions, and file pointers. |
-| 0x100 - Variable | Cross-File Master Dictionary | Single-instance shared text patterns and overlapping directory structures. |
-| Variable - End | Algebraic Seed Stream | Compressed mathematical coefficients and coordinate functions for AI/Media synthesis. |
+| 0x00 – 0x3F | Magic Header & Checksum | 64-byte `HUNGRY_V1` signature + root SHA-256 hash |
+| 0x40 – 0xFF | Manifest Ledger | compressed JSON: layout, versions, file pointers |
+| 0x100 – end | Cross-File Master Dictionary | one copy of repeated text + folder overlaps |
+| end | Algebraic Seed Stream | compressed math coefficients for AI and media |
 
-------------------------------
-## 4. Performance, Memory, and CPU Constraints
+## 4. Speed and memory limits
 
-* Compression Phase (Host Machine):
-* Max memory allocation: Up to 32 GB RAM allowed during global pattern matrix calculation.
-   * CPU utilization: Multi-threaded (100% capacity across all available CPU cores).
-   * Time limit: Non-real-time; compression can run for several hours to achieve maximum entropy reduction.
-* Decompression Phase (Target Machine):
-* Max memory allocation: Capped at 4 GB RAM to ensure compatibility with low-spec offline machines.
-   * Extraction time: Target completion within 10 to 15 minutes of intensive local CPU calculation.
+**Compression (your machine)**
+- Up to 32 GB RAM.
+- Uses all CPU cores.
+- Can take hours — that is fine.
 
-------------------------------
-## 5. Security, Error Handling, & Integrity Verification
+**Extraction (target machine)**
+- Max 4 GB RAM.
+- Should finish in 10–15 minutes.
 
-* Pre-Processing Validation: The engine computes a recursive SHA-256 manifest of the 30 GB source directory before executing any purge or transform operations.
-* Corrupted Packet Defense: If any mathematical coefficient or dictionary pointer fails local validation during unpacking, the extraction routine halts instantly and rolls back changes to prevent a partial or corrupted workspace state.
-* Buffer Overflow Prevention: Fixed-size memory buffers are enforced in the Rust extraction runtime to reject malformed or maliciously inflated header overrides.
+## 5. Safety, errors, checks
+
+- **Before anything:** the engine makes a full SHA-256 list of the source folder.
+- **If something fails:** any bad coefficient or pointer stops the unpacking at
+  once and rolls back. No half-built workspace.
+- **Buffer safety:** fixed-size buffers reject bad or hacked headers. No memory
+  overflow, no recursive attacks.

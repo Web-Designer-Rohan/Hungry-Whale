@@ -1,50 +1,61 @@
-Project Hungry-Whale is an ultra-high-ratio, air-gapped, lossless semantic compression and procedural synthesis system designed to shrink a 30 GB multi-asset development environment down to a 3 MB distribution payload without sacrificing a single byte of application or AI state logic.
-## Product Requirements Document: Project Hungry## 1. Executive Summary
-Modern development environments have bloated due to heavy node caches, massive AI weights, and unoptimized binary assets. Project Hungry solves this by shifting the compression paradigm from storing raw static bytes to archiving deterministic execution logic, cross-file pattern maps, and procedural regeneration rules. It operates entirely offline without internet dependencies, reconstructing the original workspace dynamically upon extraction.
-## 2. Vision and Mission
+# Product Requirements Document (PRD) — Hungry-Whale
 
-* Vision: To make massive developer kits and localized AI stacks as portable and lightweight as a single text configuration file.
-* Mission: Deliver an intelligent, modular compression pipeline that achieves extreme size reduction ratios on mixed-type data pools (code, binaries, databases, and AI weights) via local system mapping and mathematical synthesis.
+## 1. What is this?
 
-## 3. Target Audience & User Personas
+Hungry-Whale is a tool that squeezes a huge 30 GB project into one small
+3 MB file. Later, you can unpack that file and get your whole project back —
+byte for byte. No internet needed. Nothing is lost.
 
-* The Air-Gapped Engineer: Developers working in isolated, secure networks who must transport heavy full-stack setups via minimal storage mediums.
-* The Edge Deployment Specialist: Operators moving localized AI runtimes and execution environments across low-bandwidth or disconnected edge nodes.
+## 2. Why do we need it?
 
-## 4. Success Metrics and KPIs
+Projects today are heavy. They carry big caches, AI model files, and large
+media. Hungry-Whale does not store raw bytes. It stores smart instructions:
+what to keep, what to rebuild, and how to rebuild it.
 
-* Compression Ratio: Achieve an end-to-end reduction of a mixed 30 GB kit down to less than 10 MB (target 3 MB).
-* Data Fidelity: 100% cryptographic integrity match (SHA-256 validation) between the source workspace and the synthesized output workspace.
-* Offline Autonomy: 0 external network requests or internet dependency during the extraction and bootstrap phase.
+## 3. Who is it for?
 
-## 5. Functional Requirements (MoSCoW Prioritization)
-Must Have:
+- **The Air-Gapped Engineer** — works in secure offline networks and must carry
+  heavy setups on small drives.
+- **The Edge Deployment Specialist** — moves AI setups between low-bandwidth or
+  offline machines.
 
-* Environment Blueprinting: Purge transient build caches (node_modules, __pycache__) and replace them with precise version-controlled manifest instructions.
-* Cross-File Deduplication: Identify and merge identical text patterns across disparate code formats (HTML, CSS, TypeScript, Rust, SQL dumps) into a single master index.
-* Air-Gapped Extraction Engine: A standalone local execution utility that runs offline to rebuild binaries and map pre-existing system dependencies.
-* Integrity Verification: Automatic SHA-256 checksum generation and validation before and after the compression-extraction lifecycle.
+## 4. How do we know it works?
 
-Should Have:
+- **Size:** 30 GB project → less than 10 MB file (target: 3 MB).
+- **Exactness:** unpacked project is 100% the same as the source (SHA-256 check).
+- **Offline:** zero internet calls while unpacking and booting.
 
-* Mathematical Weight Seeding: Compress structured binary AI model parameters into functional algebraic representations or matrix coordinate seeds.
-* Media Wave Approximation: Convert static media containers into mathematical coordinate equations for lossless rendering fallback.
+## 5. What we will build
 
-Could Have:
+**Must Have**
+- **Environment Blueprinting** — remove build caches (`node_modules`,
+  `__pycache__`) and store simple rebuild instructions instead.
+- **Cross-File Deduplication** — find repeated text across files, keep one copy.
+- **Air-Gapped Extraction Engine** — a standalone tool that rebuilds everything
+  offline.
+- **Integrity Verification** — automatic SHA-256 checks before and after
+  compress-extract.
 
-* Interactive CLI interface with automated environment detection for target machines.
+**Should Have**
+- **Mathematical Weight Seeding** — store AI model weights as small math seeds.
+- **Media Wave Approximation** — store media as math equations, redraw later.
 
-Won't Have (v1):
+**Could Have**
+- **Interactive CLI** — a friendly command screen that detects the target machine.
 
-* Lossy compression modifications for core source code or functional executable binaries.
+**Won't Have (v1)**
+- No lossy changes to source code or working binaries.
 
-## 6. Non-Functional Requirements
+## 6. Other promises
 
-* Reliability: Zero data corruption tolerance during the cross-file pointer mapping process.
-* Portability: The extraction runtime must run natively on modern Windows operating systems without requiring pre-installed third-party software suites.
-* Security: Safe header manipulation that prevents memory overflow or recursive execution attacks during local unpacking.
+- **Reliability:** zero tolerance for corruption while mapping pointers.
+- **Portability:** runs on Windows and Linux. No extra software needed.
+- **Security:** safe file headers — no memory overflow, no recursive attacks
+  while unpacking.
 
-## 7. Assumptions and Constraints
+## 7. Assumptions
 
-* The target machine possesses baseline operating system libraries and standard development runtimes that can be procedurally mapped.
-* Extreme compression and extraction processes are allowed higher CPU time and memory usage trade-offs in exchange for minimal file footprint sizes.
+- The target machine has basic OS libraries and common runtimes. We use what is
+  there; we do not carry it with us.
+- We may use more CPU and memory while compressing, as long as the file stays
+  tiny.
