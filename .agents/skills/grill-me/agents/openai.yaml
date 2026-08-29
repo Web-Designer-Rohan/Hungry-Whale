@@ -1,0 +1,38 @@
+interface:
+  display_name: "Grill Me"
+  short_description: "Sharpen a plan through relentless interview"
+  description: |
+    Conducts a structured, adversarial interview to stress-test plans, designs, 
+    architectures, and decisions. Three phases: Clarify the Ask, Stress-Test the Plan, 
+    Pre-Mortem. Produces interview log, risk register, decision record, pre-mortem, 
+    and sharpened plan.
+policy:
+  allow_implicit_invocation: false
+  requires_approval: true
+capabilities:
+  - structured_interview
+  - risk_analysis
+  - decision_documentation
+  - pre_mortem
+  - artifact_generation
+configuration:
+  domains:
+    - architecture
+    - product
+    - api
+    - data
+    - security
+    - infrastructure
+    - team
+  phases:
+    - clarify
+    - stress_test
+    - pre_mortem
+  output_formats:
+    - log
+    - risks
+    - decisions
+    - premortem
+    - plan
+    - questionnaire
+    - guide
