@@ -1,0 +1,14 @@
+[package]
+name = "hungry-extractor"
+version = "0.1.0"
+edition = "2021"
+description = "Standalone rebuilder CLI: parses the HNG1 container, reconstitutes files from chunk offsets with atomic rollback, verifies SHA-256 on everything"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+zstd = "0.13"
+
+[profile.release]
+opt-level = 3
